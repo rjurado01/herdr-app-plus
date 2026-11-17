@@ -22,3 +22,22 @@ test("invalid and duplicate rules are rejected", () => {
   assert.throws(() => validateRules([{ name: "Vim", command: "nvim\nx" }]));
   assert.throws(() => validateRules([{ name: "Vim", command: "a" }, { name: "Vim", command: "b" }]));
 });
+
+test("a named space overrides the global rule and other spaces use the default", () => {
+  const configured = validateRules([
+    { name: "Vim", command: "nvim" },
+    { space: "work", name: "Vim", command: "vim" },
+    { space: "personal", name: "Vim", command: "vi" },
+  ]);
+  const tab = { id: "t1", named: true, name: "Vim" };
+  assert.equal(targetForClick({ named: true, name: "work" }, tab, [pane], configured).command, "vim");
+  assert.equal(targetForClick({ named: true, name: "personal" }, tab, [pane], configured).command, "vi");
+  assert.equal(targetForClick({ named: true, name: "other" }, tab, [pane], configured).command, "nvim");
+  assert.equal(targetForClick({ named: false, name: "work" }, tab, [pane], configured).command, "nvim");
+  assert.throws(() => validateRules([{ space: "work", name: "Vim", command: "x" }, { space: "work", name: "Vim", command: "y" }]));
+});
+
+test("old rules without space remain global", () => {
+  const old = validateRules([{ name: "Vim", command: "nvim" }]);
+  assert.equal(targetForClick({ named: true, name: "work" }, { id: "t1", named: true, name: "Vim" }, [pane], old).command, "nvim");
+});

@@ -36,6 +36,7 @@ export default class Tabs extends View {
     this.raw = null;
     this.loaded = false;
     this.error = "";
+    this.spaceInput = InputState.new({ placeholder: "Espacio exacto (vacío: todos)" });
     this.nameInput = InputState.new({ placeholder: "Nombre exacto, por ejemplo OpenCode" });
     this.commandInput = InputState.new({ placeholder: "Comando, por ejemplo opencode" });
     this.scroll = ScrollHandle.new();
@@ -100,21 +101,23 @@ export default class Tabs extends View {
     return v_flex().w_full().p(16).gap(10).bg(t.popover).text_color(t.foreground)
       .child(h_flex().justify_between().child(div().text_size(16).child("Tabs Autorun"))
         .child(button("close-settings", "Cerrar", () => closeOverlay(props().overlay))))
-      .child(div().text_size(12).text_color(t.muted).child("Reglas globales por nombre exacto de pestaña. El comando se envía a la shell al hacer clic."))
+      .child(div().text_size(12).text_color(t.muted).child("Espacio vacío: todos. Una regla del espacio tiene prioridad sobre la global."))
       .child(div().text_size(12).text_color(t.blocked).child("Riesgo: puede ejecutarse un borrador o llegar a otro programa."))
       .child(v_flex().max_h(240).overflow_y_scrollbar().gap(4).children(this.rules.map((r, i) => h_flex().id(`rule-${i}`).gap(8).items_center()
-        .child(div().flex_1().child(`${r.name} → ${r.command}`))
+        .child(div().flex_1().child(`${r.space || "Todos"} / ${r.name} → ${r.command}`))
         .child(button(`edit-${i}`, "Editar", (_e, cx) => {
           this.editing = i;
+          this.spaceInput.set_value(r.space ?? "");
           this.nameInput.set_value(r.name);
           this.commandInput.set_value(r.command);
           cx.notify();
         }))
         .child(button(`remove-${i}`, "Eliminar", (_e, cx) => this.saveRules(this.rules.filter((_, n) => n !== i), cx))))))
+      .child(Input.new(this.spaceInput).h(34).px(8).bg(t.background).border_1().border_color(t.input))
       .child(Input.new(this.nameInput).h(34).px(8).bg(t.background).border_1().border_color(t.input))
       .child(Input.new(this.commandInput).h(34).px(8).bg(t.background).border_1().border_color(t.input))
       .child(button("add-rule", this.editing === undefined ? "Añadir regla" : "Guardar cambios", (_e, cx) => {
-        const entry = { name: this.nameInput.value(), command: this.commandInput.value() };
+        const entry = { space: this.spaceInput.value(), name: this.nameInput.value(), command: this.commandInput.value() };
         const next = this.editing === undefined ? [...this.rules, entry]
           : this.rules.map((r, i) => i === this.editing ? entry : r);
         this.saveRules(next, cx);

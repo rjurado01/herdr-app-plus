@@ -1,8 +1,10 @@
 # Herdr Tabs Autorun
 
 Barra personal de pestañas con comandos configurables por nombre exacto.
-Las reglas son globales para todos los espacios, pero actúan solamente sobre
-la terminal de la pestaña pulsada. Sustituye la barra nativa en el layout y
+Cada regla puede aplicarse a todos los espacios o a uno nombrado explícitamente;
+actúa solamente sobre la terminal de la pestaña pulsada. Una regla específica
+tiene prioridad sobre una global para la misma pestaña. Espacio y pestaña
+se comparan exactamente, distinguiendo mayúsculas. Sustituye la barra nativa en el layout y
 debe revisarse cuando Herdr actualice su barra.
 
 ## Estado e instalación
