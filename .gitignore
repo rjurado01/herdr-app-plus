@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+node_modules/
+.DS_Store
+AGENTS.md
+mods/*/gpui-kit.d.ts
+mods/*/herdr.d.ts
+mods/*/jsconfig.json
+setup/snapshot/
+setup/backups/

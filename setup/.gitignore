@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+node_modules/
+.DS_Store
+# Backups may contain paths, editor state and private settings.
+snapshot/
+backups/
