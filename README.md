@@ -18,8 +18,8 @@ versión del repositorio solicitada y no publicar cambios sin autorización.
 
 - [`mods/changes-plus/`](mods/changes-plus/README.md): diffs, comentarios,
   commits y revisión de PR. Se puede instalar independientemente.
-- [`mods/tabs-autorun/`](mods/tabs-autorun/README.md): prototipo independiente;
-  todavía no ejecuta comandos y **no se instala** con el entorno por defecto.
+- [`mods/tabs-autorun/`](mods/tabs-autorun/README.md): barra experimental con
+  comandos por pestaña; **no se instala** con el entorno por defecto.
 - [`setup/`](setup/README.md): plantilla de ajustes, atajos, tema y layout
   personal `nightfox-setup`.
 

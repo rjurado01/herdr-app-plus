@@ -1,10 +1,25 @@
 # Herdr Tabs Autorun
 
-Mod en desarrollo para preparar pestañas de espacios de Herdr.
+Barra personal de pestañas con comandos configurables por nombre exacto.
+Las reglas son globales para todos los espacios, pero actúan solamente sobre
+la terminal de la pestaña pulsada. Sustituye la barra nativa en el layout y
+debe revisarse cuando Herdr actualice su barra.
 
 ## Estado e instalación
 
-**No está listo para instalar:** actualmente planifica y crea pestañas ausentes,
-pero **todavía no inicia comandos**. No se debe usar como sustituto de autorun.
+**Experimental.** Pulsa el engranaje de la barra para añadir, editar o eliminar
+reglas. Se guardan en `mods/tabs-autorun/config.json`; consérvalo al actualizar.
+Por defecto `Opencode` ejecuta `opencode`. Los nombres distinguen mayúsculas.
+Solo se ejecuta al hacer clic en una pestaña nombrada que tenga un único panel
+con terminal identificado como shell. No se ejecuta al navegar con teclado.
+
+**Riesgo aceptado:** el texto se envía con `hc send`; una shell puede contener
+un borrador y la comprobación no es atómica. El comando puede llegar a otro
+programa o ejecutar texto pendiente, incluso después de una espera. No uses
+esta función con trabajo sin guardar en la línea de comandos.
+
+La creación automática de pestañas del prototipo anterior no está integrada en
+esta barra. La sustitución del layout y la persistencia del panel necesitan una
+prueba visual y funcional en Herdr antes de darse por terminadas.
 
 Desde esta carpeta: `npm test` y `herdr-app check .`.
